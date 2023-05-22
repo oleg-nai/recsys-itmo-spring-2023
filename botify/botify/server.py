@@ -12,6 +12,7 @@ from gevent.pywsgi import WSGIServer
 from botify.data import DataLogger, Datum
 from botify.experiment import Experiments, Treatment
 from botify.recommenders.indexed import Indexed
+from botify.recommenders.contextual import Contextual
 from botify.recommenders.random import Random
 from botify.track import Catalog
 
@@ -69,7 +70,7 @@ class NextTrack(Resource):
 
         args = parser.parse_args()
 
-        treatment = Experiments.UB_NN_MY_BASED.assign(user)
+        treatment = Experiments.CONTEXTUAL_VS_MY.assign(user)
         if treatment == Treatment.T1:
             recommender = Indexed(tracks_redis.connection, ub_recommendations_redis, catalog)
         elif treatment == Treatment.T2:
@@ -77,7 +78,7 @@ class NextTrack(Resource):
         elif treatment == Treatment.T3:
             recommender = Indexed(tracks_redis.connection, my_recommendations_redis, catalog)
         else:
-            recommender = Random(tracks_redis.connection)
+            recommender = Contextual(tracks_redis.connection, catalog)
 
         recommendation = recommender.recommend_next(user, args.track, args.time)
 

@@ -59,6 +59,7 @@ class Experiments:
     USER_BASED = Experiment("USER_BASED", Split.HALF_HALF)
     PERSONALIZED = Experiment("PERSONALIZED", Split.HALF_HALF)
     UB_NN_MY_BASED = Experiment("UB_NN_MY_BASED", Split.FOUR_WAY)
+    CONTEXTUAL_VS_MY = Experiment("CONTEXTUAL_VS_MY", Split.FOUR_WAY)
 
     def __init__(self):
-        self.experiments = [Experiments.UB_NN_MY_BASED]
+        self.experiments = [Experiments.CONTEXTUAL_VS_MY]
